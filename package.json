@@ -1,0 +1,24 @@
+{
+    "name": "svelte-counter",
+    "version": "1.0.0",
+    "description": "Dynamic Counter Component for Svelte 3",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "svelte": "src/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "svelte3",
+        "javscript",
+        "counter"
+    ],
+    "author": "rallisf1",
+    "license": "MIT",
+    "devDependencies": {
+        "rollup": "^2.7.2",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-svelte": "^5.2.1",
+        "svelte": "^3.20.1"
+    }
+}
