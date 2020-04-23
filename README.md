@@ -25,8 +25,8 @@ import Counter from 'svelte-counter';
 ```js
 export let counters = {
     'coffees'	: 88,
-    'hours'		: 1600,
-    'lines'		: 6132,
+    'hours' : 1600,
+    'lines' : 6132,
     'clients'	: 22
 }
 ```
@@ -43,7 +43,7 @@ _You can use anything *valid* you like for variable & key names, it doesn't matt
 </Counter>
 ```
 
-In the slot space between _<Counter></Counter>_ you can write your template however you like. Use the same keys you declared above for the counterResult object in your template.
+In the slot space between `<Counter></Counter>` you can write your template however you like. Use the same keys you declared above for the counterResult object in your template.
 
 _I recommend not to change the "counterResult" object name. If you need to you can do it like so:_
 ```
