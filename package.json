@@ -2,6 +2,14 @@
     "name": "svelte-counter",
     "version": "1.0.0",
     "description": "Dynamic Counter Component for Svelte 3",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rallisf1/svelte-counter"
+    },
+    "homepage": "",
+    "bugs": {
+        "url": "https://github.com/rallisf1/svelte-counter/issues"
+    },
     "main": "dist/index.js",
     "module": "dist/index.mjs",
     "svelte": "src/index.js",
@@ -10,7 +18,7 @@
     },
     "keywords": [
         "svelte3",
-        "javscript",
+        "svelte",
         "counter"
     ],
     "author": "rallisf1",
