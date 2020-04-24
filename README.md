@@ -47,7 +47,7 @@ In the slot space between `<Counter></Counter>` you can write your template howe
 
 _I recommend not to change the "counterResult" object name. If you need to you can do it like so:_
 ```
-let:yourvariable="counterResult"
+let:counterResult={yourvariable}
 ```
 
 ### Configuration Options
