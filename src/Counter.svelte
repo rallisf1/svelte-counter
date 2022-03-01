@@ -3,6 +3,7 @@ import { onMount } from 'svelte';
 
 export let values, duration, random, minspeed;
 let counterResult = {};
+let init = false;
 var timers = [];
 
 onMount(() => {
@@ -32,6 +33,7 @@ onMount(() => {
             }
         }, duration / (max / step));
     }
+    init = true;
 });
 
 function getRandomInt(min, max) {
@@ -42,4 +44,6 @@ function getRandomInt(min, max) {
 
 </script>
 
+{#if init}
 <slot {counterResult}></slot>
+{/if}
