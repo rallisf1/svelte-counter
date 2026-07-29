@@ -1,10 +1,10 @@
 # svelte-counter
 
-A simple css-agnostic count-up component for Svelte 3.
+A simple css-agnostic count-up component for Svelte 5.
 
 ## Installation 🔧
 
-First you need a [Svelte](https://svelte.dev) 3 project. Its starter template lives at https://github.com/sveltejs/template.
+First you need a [Svelte](https://svelte.dev) 5 project. Its starter template lives at https://github.com/sveltejs/template.
 
 Then install the component by running the following command in your project's directory:
 
@@ -23,7 +23,7 @@ import Counter from 'svelte-counter';
 2. Declare your counter variables as one object like so (again in the script section):
 
 ```js
-export let counters = {
+let counters = {
     'coffees'	: 88,
     'hours' : 1600,
     'lines' : 6132,
@@ -35,11 +35,13 @@ _You can use anything *valid* you like for variable & key names, it doesn't matt
 3. Call the component where you want it to be placed e.g.:
 
 ```html
-<Counter values={counters} duration="5000" random="false" minspeed="200" let:counterResult>
-    <div>{counterResult.coffees} cups of coffee drunk</div>
-    <div>{counterResult.hours} hours worked</div>
-    <div>{counterResult.lines} lines of code written</div>
-    <div>{counterResult.clients} happy customers</div>
+<Counter values={counters} duration="5000" random="false" minspeed="200">
+    {#snippet children(counterResult)}
+        <div>{counterResult.coffees} cups of coffee drunk</div>
+        <div>{counterResult.hours} hours worked</div>
+        <div>{counterResult.lines} lines of code written</div>
+        <div>{counterResult.clients} happy customers</div>
+    {/snippet}
 </Counter>
 ```
 
