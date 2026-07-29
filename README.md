@@ -12,6 +12,17 @@ Then install the component by running the following command in your project's di
 npm install svelte-counter
 ```
 
+## Demo
+
+To run the interactive local demo from this repository:
+
+```sh
+npm install
+npm run demo
+```
+
+Use `npm run demo:build` to create a production build of the demo.
+
 ## How to use 🚀
 
 1. First import the component on your svelte page's script section.
@@ -36,7 +47,7 @@ _You can use anything *valid* you like for variable & key names, it doesn't matt
 
 ```html
 <Counter values={counters} duration="5000" random="false" minspeed="200">
-    {#snippet children(counterResult)}
+    {#snippet children({ counterResult })}
         <div>{counterResult.coffees} cups of coffee drunk</div>
         <div>{counterResult.hours} hours worked</div>
         <div>{counterResult.lines} lines of code written</div>
@@ -47,10 +58,7 @@ _You can use anything *valid* you like for variable & key names, it doesn't matt
 
 In the slot space between `<Counter></Counter>` you can write your template however you like. Use the same keys you declared above for the counterResult object in your template.
 
-_I recommend not to change the "counterResult" object name. If you need to you can do it like so:_
-```
-let:counterResult={yourvariable}
-```
+The `children` snippet receives an object containing `counterResult`; you may destructure it with any local name.
 
 ### Configuration Options
 All the following options are optional:

@@ -1,0 +1,8 @@
+.agents/
+.codex/
+demo/
+.git/
+.waylog/
+node_modules/
+package-lock.json
+rollup.config.js

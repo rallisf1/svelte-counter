@@ -1,48 +1,80 @@
 <script>
+    import { untrack } from 'svelte'
 
-let { children,values, duration, random, minspeed} = $props()
-let counterResult = $state({})
-let init = $state(false)
-var timers = []
+    let {
+        children,
+        values = {},
+        duration = 5000,
+        random = false,
+        minspeed = 20
+    } = $props()
 
-$effect(() => {
-    duration = parseInt(duration) || 5000
-    minspeed = parseInt(minspeed) || 20
-    random = (random == 'true');
-    for (let [key, value] of Object.entries(values)) {
-        let step = 1
-        let max = parseInt(value)
-        let randomMax = Math.floor(max / 2)
-        let randomMin = 0
-        while((duration / (max / step)) < minspeed){
-            step++
-        }
-        counterResult[key] = 0
-        timers[key] = setInterval(function(){
-            if(counterResult[key] < max){
-                if(random){
-                    randomMin = Math.floor(counterResult[key] / 2)
-                    counterResult[key] = getRandomInt(randomMin, randomMax)
-                    randomMax += step
+    let counterResult = $state({})
+    let initialized = $state(false)
+
+    $effect(() => {
+        const totalDuration = positiveInteger(duration, 5000)
+        const minimumSpeed = positiveInteger(minspeed, 20)
+        const useRandomSteps = random === true || random === 'true'
+        const targets = Object.entries(values ?? {})
+        const timers = []
+
+        untrack(() => {
+            counterResult = {}
+
+            for (const [key, value] of targets) {
+                const max = Number.parseInt(value, 10)
+
+                if (!Number.isFinite(max) || max <= 0) {
+                    counterResult[key] = Number.isFinite(max) ? max : 0
+                    continue
                 }
-                counterResult[key] += step
-            } else {
-                counterResult[key] = max
-                clearInterval(timers[key])
-            }
-        }, duration / (max / step))
-    }
-    init = true
-})
 
-function getRandomInt(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min)) + min
-}
+                let step = 1
+                while (totalDuration / (max / step) < minimumSpeed) {
+                    step += 1
+                }
+
+                let randomMax = Math.floor(max / 2)
+                counterResult[key] = 0
+
+                const timer = setInterval(() => {
+                    let current = counterResult[key]
+
+                    if (current >= max) {
+                        counterResult[key] = max
+                        clearInterval(timer)
+                        return
+                    }
+
+                    if (useRandomSteps) {
+                        const randomMin = Math.floor(current / 2)
+                        current = randomInteger(randomMin, randomMax)
+                        randomMax += step
+                    }
+
+                    counterResult[key] = Math.min(current + step, max)
+                    if (counterResult[key] === max) clearInterval(timer)
+                }, totalDuration / (max / step))
+                timers.push(timer)
+            }
+        })
+
+        initialized = true
+        return () => timers.forEach(clearInterval)
+    })
+
+    function positiveInteger(value, fallback) {
+        const parsed = Number.parseInt(value, 10)
+        return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback
+    }
+
+    function randomInteger(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min
+    }
 
 </script>
 
-{#if init}
-{@render children?.({ counterResult, })}
+{#if initialized}
+    {@render children?.({ counterResult })}
 {/if}
